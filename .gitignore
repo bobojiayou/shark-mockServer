@@ -1,0 +1,8 @@
+src/main/webapp/WEB-INF/classes
+lib
+node_modules
+.tmp
+.sass-cache
+build
+src/main/webapp/styles/css/**/*.css
+/src/test/mock/output/tmpl

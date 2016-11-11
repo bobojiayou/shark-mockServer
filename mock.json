@@ -1,0 +1,154 @@
+{
+    "code": "200",
+    "errorCode": "Optional，错误说明，参见ErrorCode",
+    "data": {
+        "pagination": {
+            "page": 4,
+            "size": 12,
+            "total": 3,
+            "totalPage": 8
+        },
+        "result": [
+            {
+                "id": 2,
+                "type": 2,
+                "totalQuantity": 76,
+                "sendTime": "147623528953",
+                "notifyInfo": {
+                    "sendPush": true,
+                    "pushMsg": "消息文案消息文案消息文案",
+                    "sendSms": true,
+                    "smsMsg": "222222222222",
+                    "number": "1"
+                },
+                "sendStatus": 2
+            },
+            {
+                "id": 3,
+                "type": 2,
+                "totalQuantity": 23,
+                "sendTime": "1131271665319",
+                "notifyInfo": {
+                    "sendPush": true,
+                    "pushMsg": "消息文案消息文案消息文案",
+                    "sendSms": true,
+                    "smsMsg": "222222222222222",
+                    "number": "1"
+                },
+                "sendStatus": 1
+            },
+            {
+                "id": 4,
+                "type": 2,
+                "totalQuantity": 36,
+                "sendTime": "272646926288",
+                "notifyInfo": {
+                    "sendPush": false,
+                    "pushMsg": "消息文案消息文案消息文案",
+                    "sendSms": true,
+                    "smsMsg": "222222222222",
+                    "number": "8"
+                },
+                "sendStatus": 1
+            },
+            {
+                "id": 5,
+                "type": 2,
+                "totalQuantity": 57,
+                "sendTime": "264370620138",
+                "notifyInfo": {
+                    "sendPush": false,
+                    "pushMsg": "消息文案消息文案",
+                    "sendSms": false,
+                    "smsMsg": "222222222222222",
+                    "number": "0"
+                },
+                "sendStatus": 1
+            },
+            {
+                "id": 6,
+                "type": 1,
+                "totalQuantity": 38,
+                "sendTime": "779834488828",
+                "notifyInfo": {
+                    "sendPush": false,
+                    "pushMsg": "消息文案消息文案消息文案",
+                    "sendSms": false,
+                    "smsMsg": "222222222222222",
+                    "number": "8"
+                },
+                "sendStatus": 2
+            },
+            {
+                "id": 7,
+                "type": 3,
+                "totalQuantity": 85,
+                "sendTime": "893848607275",
+                "notifyInfo": {
+                    "sendPush": false,
+                    "pushMsg": "消息文案消息文案消息文案",
+                    "sendSms": true,
+                    "smsMsg": "222222222222",
+                    "number": "6"
+                },
+                "sendStatus": 2
+            },
+            {
+                "id": 8,
+                "type": 2,
+                "totalQuantity": 29,
+                "sendTime": "1304366665204",
+                "notifyInfo": {
+                    "sendPush": false,
+                    "pushMsg": "消息文案消息文案消息文案",
+                    "sendSms": true,
+                    "smsMsg": "222222222222",
+                    "number": "2"
+                },
+                "sendStatus": 2
+            },
+            {
+                "id": 9,
+                "type": 1,
+                "totalQuantity": 46,
+                "sendTime": "453673239389",
+                "notifyInfo": {
+                    "sendPush": false,
+                    "pushMsg": "消息文案消息文案消息文案消息文案",
+                    "sendSms": true,
+                    "smsMsg": "222222222222222",
+                    "number": "4"
+                },
+                "sendStatus": 1
+            },
+            {
+                "id": 10,
+                "type": 2,
+                "totalQuantity": 90,
+                "sendTime": "201832340396",
+                "notifyInfo": {
+                    "sendPush": true,
+                    "pushMsg": "消息文案消息文案消息文案消息文案",
+                    "sendSms": false,
+                    "smsMsg": "222222222222",
+                    "number": "3"
+                },
+                "sendStatus": 2
+            },
+            {
+                "id": 11,
+                "type": 3,
+                "totalQuantity": 90,
+                "sendTime": "1045050083363",
+                "notifyInfo": {
+                    "sendPush": false,
+                    "pushMsg": "消息文案消息文案",
+                    "sendSms": true,
+                    "smsMsg": "222222222222",
+                    "number": "8"
+                },
+                "sendStatus": 1
+            }
+        ]
+    }
+}
