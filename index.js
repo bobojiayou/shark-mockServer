@@ -5,8 +5,7 @@ var path = require('path');
 var app = express();
 var router = express.Router();
 
-var mockData = require('./mockData/index.js');
-var formatData = require('./randomData/index.js');
+var mockData = require('./generate/index.js');
 
 router.use('/', function (req, res, next) {
     var mockfile = path.join(__dirname, req.path);
@@ -16,7 +15,7 @@ router.use('/', function (req, res, next) {
         res.send(resData);
     } else {
         res.send("无效请求路径");
-    }   
+    }
 });
 
 app.use(router).listen(3000);
