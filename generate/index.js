@@ -3,15 +3,15 @@ var util = require('../util/index.js');
 
 var type = util.type;
 var rand = util.rand;
-
+var randFloat = util.randFloat;
 var mockData = {};
 // 参数
 mockData.params = {};
-mockData.entry = function(template, params) {
+mockData.entry = function (template, params) {
     mockData.params = params;
     return mockData.generateFromTemplate(template);
 }
-mockData.generateFromTemplate = function(template, name) {
+mockData.generateFromTemplate = function (template, name) {
 
     var length = 0;
     //匹配 |length 或 | min-max;
@@ -31,12 +31,19 @@ mockData.generateFromTemplate = function(template, name) {
     var generated = null;
     switch (type(template)) {
         case 'array':
-            generated = [];
-            for (var i = 0; i < length; i++) {
-                generated[i] = mockData.generateFromTemplate(template[0]);
+            if (matches) {
+                generated = [];
+                for (var i = 0; i < length; i++) {
+                    generated[i] = mockData.generateFromTemplate(template[0]);
+                }
+                break;
+            } else {//数组无参数配置时，保持原状
+                generated = [];
+                for (var i = 0; i < template.length; i++) {
+                    generated[i] = mockData.generateFromTemplate(template[i]);
+                }
+                break;
             }
-            break;
-
         case 'object':
             generated = {};
             for (var p in template) {
@@ -47,7 +54,7 @@ mockData.generateFromTemplate = function(template, name) {
                 }
                 //传参替换处理
                 if (mockData.params[p]) {
-                    var paramType = template[p].split('=')[1] || '';
+                    var paramType = ('' + template[p]).split('=')[1] || '';
                     switch (paramType) {
                         case 'int':
                             template[p] = parseInt(mockData.params[p], 10);
@@ -66,7 +73,7 @@ mockData.generateFromTemplate = function(template, name) {
                             break;
                     }
                 }
-                generated[p.replace(/\|(\d+-\d+|\+\d+|\d+|\d+.\d+)/, '')] = mockData.generateFromTemplate(template[p], p);
+                generated[p.replace(/\|(\d+-\d+|\+\d+|\d+|\d+.\d)$/, '')] = mockData.generateFromTemplate(template[p], p);
             }
             break;
 
@@ -74,11 +81,21 @@ mockData.generateFromTemplate = function(template, name) {
             generated = (matches) ? length : template;
             break;
 
-        case 'float'://TODO
-            generated = 11.2;
-
+        case 'float': //TODO
+            generated = (matches[3]) ? randFloat(length) : template;
+            break;
         case 'boolean':
-            generated = (matches) ? rand(true) >= 0.5 : template;
+            var matchBool = (name || '').match(/\w+\|(\d+.\d+)/);
+            if (!matchBool) {
+                generated = template;
+            } else {
+                generated = rand(true) <= parseFloat(matchBool[1], 10);
+                if (template) {//template===true
+                    return generated;
+                } else {
+                    return !generated;
+                }
+            }
             break;
 
         case 'string':
