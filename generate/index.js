@@ -7,8 +7,12 @@ var randFloat = util.randFloat;
 var mockData = {};
 // 参数
 mockData.params = {};
-mockData.entry = function (template, params) {
-    mockData.params = params;
+mockData.entry = function (template, req) {
+    if (req.method === 'GET') {
+        mockData.params = req.query;
+    } else if (req.method === 'POST') {
+        mockData.params = req.body;
+    }
     return mockData.generateFromTemplate(template);
 }
 mockData.generateFromTemplate = function (template, name) {

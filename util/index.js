@@ -20,13 +20,11 @@ module.exports = {
         return arr[Math.floor(len * Math.random())];
     },
     randFloat: function (precision, minValue, maxValue) {
-        console.log(precision, typeof minValue,typeof maxValue);
         var _precision = typeof (precision) == 'undefined' ? 2 : precision;
         var _minValue = typeof (minValue) == 'undefined' ? 10 : minValue;
         var _maxValue = typeof (maxValue) == 'undefined' ? 20 : maxValue;
         var _result = parseFloat(Math.min(_minValue + (Math.random() * (_maxValue - _minValue)), _maxValue).toFixed(_precision));
         var resArr = String(_result).split(".");
-        console.log(_result);
         if (resArr.length>1 && resArr[1].length < _precision) {
             //为了解决最后一位小数为0不显示的问题
             return parseFloat(result + String(parseInt(Math.random() * 10) || 1));

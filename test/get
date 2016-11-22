@@ -16,11 +16,10 @@
                 "sendTime": "@YYYY:@MM:@SS",
                 "notifyInfo": {
                     "sendPush|0.2": false,
-                    "pushMsg|2-4": "消息文案",
+                    "pushMsg|2-4": "字符串",
                     "sendSms|0.4": true,
                     "smsMsg|4-5": "222",
                     "number": "@NUMBER",
-                    "name": "@CNAME",
                     "float|2:90-91": 11.23,
                     "url": "@URL",
                     "dateTime": "@DATETIME",
@@ -28,7 +27,8 @@
                     "ip": "@IP",
                     "ctitle": "@CTITLE",
                     "title": "@TITLE",
-                    "NAME": "@NAME"
+                    "cname": "@CNAME",
+                    "enNAME": "@NAME"
                 },
                 "sendStatus|1-3": 1
             }

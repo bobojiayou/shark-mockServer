@@ -11,7 +11,7 @@ router.use('/', function (req, res, next) {
     var mockfile = path.join(__dirname, req.path);
     if (fs.existsSync(mockfile)) {
         var temple = fs.readFileSync(mockfile, 'utf-8');
-        var resData = mockData.entry(JSON.parse(temple), req.query);
+        var resData = mockData.entry(JSON.parse(temple), req);
         res.send(resData);
     } else {
         res.send("无效请求路径");
