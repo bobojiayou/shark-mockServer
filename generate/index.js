@@ -15,7 +15,7 @@ mockData.generateFromTemplate = function (template, name) {
 
     var length = 0;
     //匹配 |length 或 | min-max;
-    var matches = (name || '').match(/\w+\|(\d+)-(\d+)|\w+\|(\d+)/);
+    var matches = (name || '').match(/\w+\|(\d+)-(\d+)|\w+\|(\d+)$/);
     if (matches) {
         //| min-max
         if (matches[2]) {
@@ -30,7 +30,7 @@ mockData.generateFromTemplate = function (template, name) {
     // 解析数据载体
     var generated = null;
     switch (type(template)) {
-        case 'array':
+        case 'array':// length| minLength - maxLength
             if (matches) {
                 generated = [];
                 for (var i = 0; i < length; i++) {
@@ -46,9 +46,9 @@ mockData.generateFromTemplate = function (template, name) {
             }
         case 'object':
             generated = {};
-            for (var p in template) {
+            for (var p in template) {//处理步进
                 var inc_matches = p.match(/\w+\|\+(\d+)/);
-                if (inc_matches && type(template[p]) == 'number') {
+                if (inc_matches && type(template[p]) === 'int') { 
                     var increment = parseInt(inc_matches[1], 10);
                     template[p] += increment;
                 }
@@ -73,24 +73,32 @@ mockData.generateFromTemplate = function (template, name) {
                             break;
                     }
                 }
-                generated[p.replace(/\|(\d+-\d+|\+\d+|\d+|\d+.\d)$/, '')] = mockData.generateFromTemplate(template[p], p);
+                generated[p.replace(/\|(\d+-\d+|\+\d+|\d+|\d+.\d|\d+:\d+-\d+)$/, '')] = mockData.generateFromTemplate(template[p], p);
             }
             break;
 
-        case 'int':
+        case 'int':// length
             generated = (matches) ? length : template;
             break;
 
-        case 'float': //TODO
-            generated = (matches[3]) ? randFloat(length) : template;
+        case 'float': //TODO  length：min-max
+            var matchFloat = (name || '').match(/\w+\|(\d+):(\d+)-(\d+)$/);
+            if (matchFloat) {
+                generated = randFloat(parseInt(matchFloat[1], 10), parseInt(matchFloat[2], 10), parseInt(matchFloat[3], 10));
+            } else if (matches) {
+                generated = randFloat(length);
+            } else {
+                generated = template;
+            }
             break;
-        case 'boolean':
+
+        case 'boolean':// percent
             var matchBool = (name || '').match(/\w+\|(\d+.\d+)/);
             if (!matchBool) {
                 generated = template;
             } else {
                 generated = rand(true) <= parseFloat(matchBool[1], 10);
-                if (template) {//template===true
+                if (template) {//区分初始值为true或false的处理
                     return generated;
                 } else {
                     return !generated;
@@ -98,7 +106,7 @@ mockData.generateFromTemplate = function (template, name) {
             }
             break;
 
-        case 'string':
+        case 'string': //length| minLength-maxLength
             if (template.length) {
                 generated = '';
                 length = length || 1;
