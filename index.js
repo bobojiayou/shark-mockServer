@@ -19,3 +19,4 @@ router.use('/', function (req, res, next) {
 });
 
 app.use(router).listen(3000);
+console.log('listen port 3000');

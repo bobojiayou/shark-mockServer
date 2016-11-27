@@ -3,7 +3,7 @@
     "errorCode": "Optional，错误说明，参见ErrorCode",
     "data": {
         "pagination": {
-            "page": "=int",
+            "page": 2311,
             "size": "=int",
             "total": 3,
             "totalPage|3-10": 3

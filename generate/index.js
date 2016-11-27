@@ -1,6 +1,5 @@
 var randomData = require('../random/index.js');
 var util = require('../util/index.js');
-
 var type = util.type;
 var rand = util.rand;
 var randFloat = util.randFloat;
@@ -52,12 +51,12 @@ mockData.generateFromTemplate = function (template, name) {
             generated = {};
             for (var p in template) {//处理步进
                 var inc_matches = p.match(/\w+\|\+(\d+)/);
-                if (inc_matches && type(template[p]) === 'int') { 
+                if (inc_matches && type(template[p]) === 'int') {
                     var increment = parseInt(inc_matches[1], 10);
                     template[p] += increment;
                 }
                 //传参替换处理
-                if (mockData.params[p]) {
+                if (!util.isEmpty(mockData.params[p])) {
                     var paramType = ('' + template[p]).split('=')[1] || '';
                     switch (paramType) {
                         case 'int':
