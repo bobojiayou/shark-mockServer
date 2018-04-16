@@ -73,7 +73,6 @@ mockData.generateFromTemplate = function (template, name) {
                         mockData.params[equalP] = mockData.params[p]
                         template[equalP] = template[p];
                     }
-                    console.log('paramType2', paramType);
                     switch (paramType) {
                         case 'int':
                             template[p] = parseInt(param, 10);
