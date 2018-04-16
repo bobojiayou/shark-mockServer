@@ -1,5 +1,6 @@
 var randomData = require('../random/index.js');
 var util = require('../util/index.js');
+
 var type = util.type;
 var rand = util.rand;
 var randFloat = util.randFloat;
@@ -33,14 +34,14 @@ mockData.generateFromTemplate = function (template, name) {
     // 解析数据载体
     var generated = null;
     switch (type(template)) {
-        case 'array':// length| minLength - maxLength
+        case 'array': // length| minLength - maxLength
             if (matches) {
                 generated = [];
                 for (var i = 0; i < length; i++) {
                     generated[i] = mockData.generateFromTemplate(template[0]);
                 }
                 break;
-            } else {//数组无参数配置时，保持原状
+            } else { //数组无参数配置时，保持原状
                 generated = [];
                 for (var i = 0; i < template.length; i++) {
                     generated[i] = mockData.generateFromTemplate(template[i]);
@@ -49,30 +50,45 @@ mockData.generateFromTemplate = function (template, name) {
             }
         case 'object':
             generated = {};
-            for (var p in template) {//处理步进
+            for (var p in template) { //处理步进
                 var inc_matches = p.match(/\w+\|\+(\d+)/);
                 if (inc_matches && type(template[p]) === 'int') {
                     var increment = parseInt(inc_matches[1], 10);
                     template[p] += increment;
                 }
                 //传参替换处理
-                if (!util.isEmpty(mockData.params[p])) {
-                    var paramType = ('' + template[p]).split('=')[1] || '';
+                if (mockData.params[p]) {
+                    var param = mockData.params[p]
+                    var equalP = ''
+                    var paramType = ''
+                   
+                    if (type(template[p])==='string' && (template[p].indexOf(',') !== -1 || template[p].indexOf('=') !== -1)) {
+                        var contentArr = (template[p]).split(',') || []
+                        if (!isEmpty(contentArr[0]) && contentArr[0].indexOf('=') !== -1) {
+                            paramType = contentArr[0].split('=')[1] || '';
+                        }
+                        if(!isEmpty(contentArr[1])  && contentArr[1].indexOf('^') !== -1){
+                            equalP = contentArr[1].split('^')[1] || p;
+                        }
+                        mockData.params[equalP] = mockData.params[p]
+                        template[equalP] = template[p];
+                    }
+                    console.log('paramType2', paramType);
                     switch (paramType) {
                         case 'int':
-                            template[p] = parseInt(mockData.params[p], 10);
+                            template[p] = parseInt(param, 10);
                             break;
                         case 'float':
-                            template[p] = parseFloat(mockData.params[p], 10);
+                            template[p] = parseFloat(param, 10);
                             break;
                         case 'string':
-                            template[p] = String(mockData.params[p]);
+                            template[p] = String(param);
                             break;
                         case 'boolean':
-                            template[p] = Boolean(mockData.params[p]);
+                            template[p] = Boolean(param);
                             break;
                         default:
-                            template[p] = mockData.params[p];
+                            template[p] = param;
                             break;
                     }
                 }
@@ -80,7 +96,7 @@ mockData.generateFromTemplate = function (template, name) {
             }
             break;
 
-        case 'int':// length
+        case 'int': // length
             generated = (matches) ? length : template;
             break;
 
@@ -95,13 +111,13 @@ mockData.generateFromTemplate = function (template, name) {
             }
             break;
 
-        case 'boolean':// percent
+        case 'boolean': // percent
             var matchBool = (name || '').match(/\w+\|(\d+.\d+)/);
             if (!matchBool) {
                 generated = template;
             } else {
                 generated = rand(true) <= parseFloat(matchBool[1], 10);
-                if (template) {//区分初始值为true或false的处理
+                if (template) { //区分初始值为true或false的处理
                     return generated;
                 } else {
                     return !generated;
@@ -156,6 +172,10 @@ function getRandomData(key) {
         case 'function':
             return a();
     }
+}
+
+function isEmpty(data){
+    return data === null || data === undefined || data === '' || data === NaN
 }
 
 module.exports = mockData;
