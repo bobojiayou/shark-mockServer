@@ -1,6 +1,6 @@
 {
-  "name": "mockserver",
-  "version": "1.2.0",
+  "name": "shark-mockserver",
+  "version": "1.2.1",
   "description": "mockServer",
   "main": "index.js",
   "dependencies":{
